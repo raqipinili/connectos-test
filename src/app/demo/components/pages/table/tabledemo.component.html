@@ -1,0 +1,76 @@
+<div class="grid">
+	<div class="col-12">
+		<div class="card">
+			<h5>Mobile Speed Camera Visits and Stays</h5>
+			<p-table #dt1
+				dataKey="date"
+				[value]="data"
+				[rows]="50"
+				[paginator]="true"
+				[lazy]="lazyLoad"
+				(onLazyLoad)="getData($event)"
+				[totalRecords]="totalRecords"
+				[paginator]="true"
+				[rowsPerPageOptions]="[50,100,200]"
+				[loading]="loading"
+				[rowHover]="true"
+				styleClass="p-datatable-gridlines"
+				currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+				[globalFilterFields]="['date','description_of_site','highest_speed','average_speed', 'posted_speed']"
+				responsiveLayout="scroll">
+				<ng-template pTemplate="caption">
+					<div class="flex justify-content-between flex-column sm:flex-row">
+						<button pButton label="Clear" class="p-button-outlined mb-2" icon="pi pi-filter-slash" (click)="clear(dt1)"></button>
+						<span class="p-input-icon-left mb-2">
+							<i class="pi pi-search"></i>
+							<input pInputText type="text" #filter (input)="onGlobalFilter(dt1, $event)" placeholder="Search Keyword" class="w-full"/>
+						</span>
+					</div>
+				</ng-template>
+				<ng-template pTemplate="header">
+					<tr>
+						<th pSortableColumn="date">Date <p-sortIcon field="date"></p-sortIcon></th>
+						<th pSortableColumn="timeatsiteinhours">Time <p-sortIcon field="timeatsiteinhours"></p-sortIcon></th>
+						<th pSortableColumn="description_of_site">Description of site <p-sortIcon field="description_of_site"></p-sortIcon></th>
+						<th pSortableColumn="camera_location">Camera Location <p-sortIcon field="camera_location"></p-sortIcon></th>
+						<th pSortableColumn="street">Street <p-sortIcon field="street"></p-sortIcon></th>
+						<th pSortableColumn="number_checked">Number Checked <p-sortIcon field="number_checked"></p-sortIcon></th>
+						<th pSortableColumn="highest_speed">Highest Speed <p-sortIcon field="highest_speed"></p-sortIcon></th>
+						<th pSortableColumn="average_speed">Average Speed <p-sortIcon field="average_speed"></p-sortIcon></th>
+						<th pSortableColumn="posted_speed">Posted Speed <p-sortIcon field="posted_speed"></p-sortIcon></th>
+					</tr>
+					<tr>
+						<th><p-columnFilter type="date" field="date" placeholder="mm/dd/yyyy" [showMenu]="true"></p-columnFilter></th>
+						<th><p-columnFilter type="numeric" field="timeatsiteinhours" display="menu" placeholder="Time"></p-columnFilter></th>
+						<th><p-columnFilter type="text" field="description_of_site" placeholder="Description" [showMenu]="true"></p-columnFilter></th>
+						<th><p-columnFilter type="text" field="camera_location" placeholder="Camera loc."></p-columnFilter></th>
+						<th><p-columnFilter type="text" field="street" placeholder="Street"></p-columnFilter></th>
+						<th><p-columnFilter type="numeric" field="number_checked" display="menu" placeholder="# Checked"></p-columnFilter></th>
+						<th><p-columnFilter type="numeric" field="highest_speed" display="menu" placeholder="Highest speed"></p-columnFilter></th>
+						<th><p-columnFilter type="numeric" field="average_speed" display="menu" placeholder="Avg speed"></p-columnFilter></th>
+						<th><p-columnFilter type="numeric" field="posted_speed" display="menu" placeholder="Posted speed"></p-columnFilter></th>
+					</tr>
+				</ng-template>
+				<ng-template pTemplate="body" let-data>
+					<tr>
+						<td>{{ data.date | date: 'MM/dd/yyyy' }}</td>
+						<td>{{ data.timeatsiteinhours | number : '1.2-2' }}</td>
+						<td>{{ data.description_of_site }}</td>
+						<td>{{ data.camera_location }}</td>
+						<td>{{ data.street }}</td>
+						<td>{{ data.number_checked }}</td>
+						<td>{{ data.highest_speed }}</td>
+						<td>{{ data.average_speed }}</td>
+						<td>{{ data.posted_speed }}</td>
+					</tr>
+				</ng-template>
+				<ng-template pTemplate="emptymessage">
+					<tr><td colspan="9">No records.</td></tr>
+				</ng-template>
+				<ng-template pTemplate="loadingbody">
+					<tr><td colspan="9">Loading data. Please wait.</td></tr>
+				</ng-template>
+    		</p-table>
+		</div>
+	</div>
+</div>
